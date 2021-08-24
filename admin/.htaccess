@@ -1,0 +1,11 @@
+RewriteEngine on
+
+RewriteRule ^home$ media.php?module=home [L]
+RewriteRule ^pinjaman\.html$ media.php?module=pinjaman&id=$1 [L]
+RewriteRule ^semua-data\.html$ media.php?module=semuadata&id=$1 [L]
+RewriteRule ^hasil\.html$ media.php?module=hasil&id=$1 [L]
+RewriteRule ^masukan_dana\.html$ media.php?module=masukan_dana&id=$1 [L]
+RewriteRule ^history\.html$ media.php?module=history&id=$1 [L]
+RewriteRule ^proses-excel\.html$ media.php?module=prosesexcel&id=$1 [L]
+RewriteRule ^hapus-data\.html$ media.php?module=hapusdata&id=$1 [L]
+Options All -Indexes
