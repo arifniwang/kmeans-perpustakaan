@@ -7,7 +7,8 @@ include "../config/helper.php";
 $menu = 'hasil_rekomendasi';
 
 $sql = "SELECT * FROM hasil";
-$data = mysql_query($sql);
+$iterasi1 = mysql_query($sql);
+$iterasi2 = mysql_query($sql);
 
 $total_1 = "SELECT COUNT(*) AS total FROM hasil WHERE cluster1 = 'Yes'";
 $data_1 = mysql_fetch_assoc(mysql_query($total_1));
@@ -53,6 +54,9 @@ $total_data = $data_1['total'] + $data_2['total'] + $data_3['total'];
                     <div class="card-body">
                         <table class="table table-bordered">
                             <tr>
+                                <th colspan="10" class="text-center">ITERASI 1</th>
+                            </tr>
+                            <tr>
                                 <th>Objek</th>
                                 <th>Data 1</th>
                                 <th>Data 2</th>
@@ -64,8 +68,60 @@ $total_data = $data_1['total'] + $data_2['total'] + $data_3['total'];
                                 <th class="text-center">Cluster 2</th>
                                 <th class="text-center">Cluster 3</th>
                             </tr>
-                            <?php if (mysql_num_rows($data) > 0): ?>
-                                <?php while ($row = mysql_fetch_assoc($data)): ?>
+                            <?php if (mysql_num_rows($iterasi1) > 0): ?>
+                                <?php while ($row = mysql_fetch_assoc($iterasi1)): ?>
+                                    <tr>
+                                        <td><?php echo $row['object']; ?></td>
+                                        <td><?php echo $row['data1']; ?></td>
+                                        <td><?php echo $row['data2']; ?></td>
+                                        <td><?php echo $row['data3']; ?></td>
+                                        <td><?php echo $row['data4']; ?></td>
+                                        <td><?php echo $row['data5']; ?></td>
+                                        <td><?php echo $row['data6']; ?></td>
+                                        <td class="text-center">
+                                            <?php if ($row['cluster1'] == 'Yes'): ?>
+                                                <span class="badge bg-success">OK</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">null</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php if ($row['cluster2'] == 'Yes'): ?>
+                                                <span class="badge bg-success">OK</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">null</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php if ($row['cluster3'] == 'Yes'): ?>
+                                                <span class="badge bg-success">OK</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">null</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <th colspan="10" class="text-center">ITERASI 2</th>
+                            </tr>
+                            <tr>
+                                <th>Objek</th>
+                                <th>Data 1</th>
+                                <th>Data 2</th>
+                                <th>Data 3</th>
+                                <th>Data 4</th>
+                                <th>Data 5</th>
+                                <th>Data 6</th>
+                                <th class="text-center">Cluster 1</th>
+                                <th class="text-center">Cluster 2</th>
+                                <th class="text-center">Cluster 3</th>
+                            </tr>
+                            <?php if (mysql_num_rows($iterasi2) > 0): ?>
+                                <?php while ($row = mysql_fetch_assoc($iterasi2)): ?>
                                     <tr>
                                         <td><?php echo $row['object']; ?></td>
                                         <td><?php echo $row['data1']; ?></td>

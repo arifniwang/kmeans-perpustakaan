@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.7.32)
 # Database: ta_kmeans_perpustakaan
-# Generation Time: 2021-08-29 02:57:47 +0000
+# Generation Time: 2021-08-29 14:02:11 +0000
 # ************************************************************
 
 
@@ -279,20 +279,21 @@ CREATE TABLE `pinjaman` (
   `jumlah_buku_dipinjam` int(4) NOT NULL,
   `total_bayar` varchar(20) NOT NULL,
   `tanggal_pengembalian` varchar(50) NOT NULL,
-  `buku_apa_saja` text NOT NULL
+  `buku_apa_saja` text NOT NULL,
+  `objek_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `pinjaman` WRITE;
 /*!40000 ALTER TABLE `pinjaman` DISABLE KEYS */;
 
-INSERT INTO `pinjaman` (`id_member`, `nama`, `jenis_kelamin`, `usia`, `tanggal_sekarang`, `jumlah_buku_dipinjam`, `total_bayar`, `tanggal_pengembalian`, `buku_apa_saja`)
+INSERT INTO `pinjaman` (`id_member`, `nama`, `jenis_kelamin`, `usia`, `tanggal_sekarang`, `jumlah_buku_dipinjam`, `total_bayar`, `tanggal_pengembalian`, `buku_apa_saja`, `objek_id`)
 VALUES
-	('M001','Arif Niwang','2',3,'2021-08-29',2,'10000','2021-08-30','B-0011 B-0012'),
-	('M002','Sapta Agung','2',2,'2021-08-29',1,'10000','2021-08-30','B-0013'),
-	('M003','Dinda Gustian','1',2,'2021-08-29',2,'20000','2021-08-31','B-0014 B-0015'),
-	('M004','Muhammad Alfian','2',2,'2021-08-30',2,'20000','2021-09-01','B-0014 B-0015'),
-	('M005','Anisha Tiarasani','1',3,'2021-08-29',2,'20000','2021-08-31','B-0014 B-0015'),
-	('M006','Faris','2',2,'2021-08-29',2,'20000','2021-08-31','B-0011 B-0012');
+	('M001','Arif Niwang','2',3,'2021-08-29',2,'10000','2021-08-30','B-0011 B-0012',1),
+	('M002','Sapta Agung','2',2,'2021-08-29',1,'10000','2021-08-30','B-0013',2),
+	('M003','Dinda Gustian','1',2,'2021-08-29',2,'20000','2021-08-31','B-0014 B-0015',3),
+	('M004','Muhammad Alfian','2',2,'2021-08-30',2,'20000','2021-09-01','B-0014 B-0015',4),
+	('M005','Anisha Tiarasani','1',3,'2021-08-29',2,'20000','2021-08-31','B-0014 B-0015',5),
+	('M006','Faris','2',2,'2021-08-29',2,'20000','2021-08-31','B-0011 B-0012',6);
 
 /*!40000 ALTER TABLE `pinjaman` ENABLE KEYS */;
 UNLOCK TABLES;
