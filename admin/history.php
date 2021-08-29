@@ -1,72 +1,90 @@
 <?php
-  include '../config/koneksi.php';
+session_start();
+error_reporting(0);
+include "../config/koneksi.php"; // koneksi database
+include "../config/session_manager.php"; // validasi sesi
+include "../config/helper.php";
+$menu = 'history';
+
+$sql = "SELECT * FROM pinjaman";
+$data = mysql_query($sql);
 ?>
-<html>
+
+<!doctype html>
+<html lang="en">
 <head>
-	<style>
-		table{
-			border : 1px solid #000;
-			text-align : center;
-			font-family:tahoma;
-			font-size:12px;
-		}
-		table tr th{
-			border : 1px solid #000;
-			background : #cecece;
-			color : #000;
-			padding:3px;
-		}
-		table tr td{
-			border : 1px solid #000;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Kmeans GA">
+    <title>Clustering K-Means - Home</title>
+
+    <?php include '../layout/template/css.php'; ?>
+
+    <style>
+    </style>
 </head>
 <body>
 
-<form action="" method="post">
-  <fieldset>
-    <legend>Halaman History</legend>
-    Masukkan Tanggal Pencarian History :<br>
-    <input type="text" name="tanggal_pengambilan" placeholder="21-11-2019"><br><br> <!-- tampilan form tanggal -->
-    
-    <input type="submit" name="proses" value="Lihat History">  <!-- Ambil data di table "peminjaman" yang di tampilkan seperti di bawah ini-->
-  </fieldset>
-</form>
+<?php include '../layout/template/navigasi.php'; ?>
 
-<br>
-<hr>
-<?php 
-  if(isset($_POST['proses'])){
-      $query=mysql_query("select * from pinjaman where tanggal_sekarang='".$_POST['tanggal_pengambilan']."'");
-      echo'
-            <table style="width:100%">
-              <caption>Data History</caption>
-              <tr>
-                <th>Kode Member</th>
-                <th>Tanggal</th>
-                <th>Jumlah Buku</th>
-                <th>Buku Yang Dipinjam</th>
-                <th>Lamanya Dipinjam</th>
-              </tr>';
-      while($row=mysql_fetch_array($query)){
-        $booking    =new DateTime($row['tanggal_pengembalian']);
-        $today        =new DateTime($row['tanggal_sekarang']);
-        $diff         =$today->diff($booking);
-        
-          echo'
-              <tr>
-                <td>'.$row['id_member'].'</td>
-                <td>'.$row['tanggal_sekarang'].'</td>
-                <td>'.$row['jumlah_buku_dipinjam'].'</td>
-                <td>'.$row['buku_apa_saja'].'</td> <!-- Atau ditamppilkan kode buku juga tidak masalah-->
-                <td>'.$diff->d.'</td>
-              </tr>
-          ';
-      }
-      echo'</table>';
-  }
-?>
+<main>
+    <section class="container">
+        <div class="row py-lg-5">
+            <div class="col-md-12 mx-auto">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal text-center">Data History</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Kode Member</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Tanggal Kembali</th>
+                                <th>Lama Pinjaman</th>
+                                <th>Jumlah Buku</th>
+                                <th>Buku Yang Dipinjam</th>
+                            </tr>
+                            <?php if (mysql_num_rows($data) > 0): ?>
+                                <?php while ($row = mysql_fetch_assoc($data)): ?>
+                                    <tr>
+                                        <td><?php echo $row['id_member']; ?></td>
+                                        <td><?php echo $row['tanggal_sekarang']; ?></td>
+                                        <td><?php echo $row['tanggal_pengembalian']; ?></td>
+                                        <td><?php echo totalHari($row['tanggal_sekarang'], $row['tanggal_pengembalian']); ?></td>
+                                        <td><?php echo $row['jumlah_buku_dipinjam']; ?></td>
+                                        <td><?php echo $row['buku_apa_saja']; ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 
+<?php include '../layout/template/footer.php'; ?>
+
+<?php include '../layout/template/js.php'; ?>
+
+<script>
+    $(document).ready(function () {
+        $("#kode_buku").change(function () {
+            let value = $(this).val();
+            cariBuku(value);
+        });
+    });
+
+    function cariBuku(kode) {
+        $.get("cari_buku.php", {
+            kodebuku: kode
+        }, function (data, status) {
+            $('#bukupinjaman').html(data);
+        });
+    }
+</script>
 </body>
 </html>
-
