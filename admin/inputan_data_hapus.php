@@ -12,7 +12,7 @@ $sql = "DELETE FROM objek WHERE id_objek = $id";
 mysql_query($sql) or die(mysql_error());
 
 // delete data hasil
-$sql = "DELETE FROM objek WHERE objek_id = $id";
+$sql = "DELETE FROM hasil WHERE objek_id = $id";
 mysql_query($sql) or die(mysql_error());
 
 echo "
