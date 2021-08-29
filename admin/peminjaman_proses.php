@@ -92,9 +92,13 @@ if (isset($_POST['proses'])) {
     $sql = "INSERT INTO objek (`id_objek`, `nama_objek`, `data`) VALUES (null,'$nama','$object_data')";
     mysql_query($sql) or die(mysql_error());
 
+    // last object id
+    $sql = "SELECT * FROM objek ORDER BY id_objek DESC";
+    $objek = mysql_fetch_assoc(mysql_query($sql));
+
     // save hasil k-means
-    $sql = "INSERT INTO `hasil`(`object`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `cluster1`, `cluster2`, `cluster3`) 
-    VALUES ('$kode_member','$kelamin','$usia','$total_buku','$kategori_sosial','$kategori_agama','$kategori_cerita','$cluster_sosial','$cluster_agama','$cluster_cerita')";
+    $sql = "INSERT INTO `hasil`(`object`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `cluster1`, `cluster2`, `cluster3`, `objek_id`) 
+    VALUES ('$kode_member','$kelamin','$usia','$total_buku','$kategori_sosial','$kategori_agama','$kategori_cerita','$cluster_sosial','$cluster_agama','$cluster_cerita','" . $objek['id_objek'] . "')";
     mysql_query($sql) or die(mysql_error());
 
     echo "
